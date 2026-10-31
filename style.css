@@ -802,3 +802,57 @@ main {
   padding-top: var(--espaco-m);
   border-top: var(--borda-fina) solid var(--cor-divisoria);
 }
+
+
+/* ==========================================================================
+   PÁGINA SOBRE
+   Acréscimos para a página sobre.html. Tudo o que está acima continua igual.
+   ========================================================================== */
+
+/* ---- Variáveis novas da página sobre ---- */
+:root {
+  --tamanho-nome-item: 28px;        /* nome da instituição/empresa */
+  --peso-nome-item: var(--peso-leve);
+  --largura-foto-perfil: 400px;     /* foto quadrada do topo */
+  --recuo-detalhe: 20px;            /* recuo do detalhe abaixo do nome */
+  --espaco-entre-itens: 40px;       /* entre um item e outro da lista */
+}
+
+/* ---- Foto do topo: quadrada, até 400px ---- */
+.sobre-foto {
+  max-width: var(--largura-foto-perfil);
+}
+
+/* ---- Títulos das seções (Formação, Experiência, Habilidades) ---- */
+.sobre-secao .titulo-secao {
+  padding-bottom: var(--espaco-p);
+  border-bottom: var(--borda-fina) solid var(--cor-divisoria);
+}
+
+/* ---- Itens das listas (instituição, empresa, grupo de habilidades) ---- */
+.item-sobre + .item-sobre {
+  margin-top: var(--espaco-entre-itens);
+}
+
+.item-sobre-nome {
+  font-size: var(--tamanho-nome-item);
+  font-weight: var(--peso-nome-item);
+}
+
+.item-sobre-detalhe {
+  margin-top: var(--espaco-xs);
+  margin-bottom: var(--espaco-zero);
+  padding-left: var(--recuo-detalhe);
+  color: var(--cor-texto);
+  font-size: var(--tamanho-paragrafo);
+  line-height: var(--altura-linha-texto);
+}
+
+.item-sobre-detalhe li + li {
+  margin-top: var(--espaco-xxs);
+}
+
+/* ---- Botão do currículo ---- */
+.sobre-acoes {
+  margin-top: var(--espaco-g);
+}
