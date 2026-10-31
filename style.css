@@ -1,0 +1,804 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;700&family=DM+Sans:wght@300;400;500;700&display=swap");
+
+/* ==========================================================================
+   PORTFÓLIO — style.css
+   Um único arquivo para todas as páginas (index, sobre e cases).
+   Mobile-first: os valores padrão são os do celular; os ajustes ficam em
+   @media (min-width: 768px) e @media (min-width: 1200px), dentro do :root.
+
+   Seções:
+   1. Variáveis (design system: edite aqui para mudar o visual)
+   2. Base (reset, tipografia, container, imagem, botão, acessibilidade)
+   3. Cabeçalho
+   4. Home
+   5. Sobre
+   6. Case
+   7. Rodapé
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. VARIÁVEIS
+   ========================================================================== */
+
+:root {
+  /* ---- Cores ---- */
+  --cor-fundo: #F0F1F3;
+  --cor-bloco-imagem: #E8E8E8;
+  --cor-texto: #1A1A1A;
+  --cor-texto-secundario: #666666;
+  --cor-botao-fundo: #333333;
+  --cor-botao-texto: #FFFFFF;
+  --cor-botao-hover: #1A1A1A;
+  --cor-link: #8A6100;
+  --cor-destaque: #FF37D0;          /* só decoração, nunca texto */
+  --cor-divisoria: #222222;
+  --cor-foco: #1A1A1A;
+  --cor-transparente: transparent;
+
+  /* ---- Fontes (Google Fonts + reserva do sistema) ---- */
+  --fonte-titulos: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --fonte-texto: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --peso-leve: 300;
+  --peso-regular: 400;
+  --peso-medio: 500;
+  --peso-negrito: 700;
+
+  /* ---- Tamanhos de texto (celular) ---- */
+  --tamanho-logo: 24px;
+  --tamanho-titulo-principal: 46px;
+  --tamanho-subtitulo: 19px;
+  --tamanho-titulo-pagina: 38px;
+  --tamanho-card-titulo: 27px;
+  --tamanho-card-descricao: 16px;
+  --tamanho-titulo-secao: 27px;
+  --tamanho-paragrafo: 16px;
+  --tamanho-resultado: 48px;
+  --tamanho-email: 24px;
+  --tamanho-menu: 16px;
+  --tamanho-pequeno: 14px;          /* legendas e rótulos */
+
+  /* ---- Altura de linha e espaçamento entre letras ---- */
+  --altura-linha-titulo: 1.1;
+  --altura-linha-subtitulo: 1.4;
+  --altura-linha-texto: 1.6;
+  --altura-linha-numero: 1;
+  --letras-titulo: -0.02em;
+  --letras-normal: 0;
+
+  /* ---- Layout ---- */
+  --largura-conteudo: 1160px;
+  --margem-lateral: 24px;
+  --coluna-sobre: 560px;
+  --coluna-case: 756px;
+  --largura-subtitulo: 760px;
+  --largura-foto-sobre: 440px;
+
+  /* ---- Espaçamentos ---- */
+  --espaco-secao: 80px;             /* entre seções grandes */
+  --espaco-cards: 40px;             /* entre cards */
+  --espaco-hero-topo: 48px;         /* do cabeçalho até o título */
+  --espaco-cabecalho: 24px;         /* respiro acima/abaixo do cabeçalho */
+  --espaco-xxs: 4px;
+  --espaco-xs: 8px;
+  --espaco-p: 16px;
+  --espaco-m: 24px;
+  --espaco-g: 40px;
+  --espaco-zero: 0;
+
+  /* ---- Botão ---- */
+  --botao-altura: 44px;
+  --botao-padding-lateral: 24px;
+  --raio-pilula: 999px;
+
+  /* ---- Imagens ---- */
+  --proporcao-padrao: 1 / 1;        /* troque por imagem com style="--proporcao: 16 / 9" */
+  --proporcao-capa-case: 16 / 9;
+  --zoom-imagem-hover: 1.02;
+
+  /* ---- Linhas, foco e sublinhado ---- */
+  --borda-fina: 1px;
+  --foco-largura: 3px;
+  --foco-distancia: 4px;
+  --sublinhado-espessura: 1px;
+  --sublinhado-destaque: 2px;
+  --sublinhado-distancia: 4px;
+  --marcador-largura: 32px;         /* tracinho rosa acima dos títulos de seção */
+  --marcador-altura: 4px;
+
+  /* ---- Movimento ---- */
+  --animacao-duracao: 700ms;
+  --animacao-deslocamento: 12px;
+  --animacao-curva: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --transicao: 250ms ease;
+
+  /* ---- Camadas ---- */
+  --camada-topo: 100;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  :root {
+    --tamanho-logo: 26px;
+    --tamanho-titulo-principal: 64px;
+    --tamanho-subtitulo: 22px;
+    --tamanho-titulo-pagina: 50px;
+    --tamanho-card-titulo: 32px;
+    --tamanho-card-descricao: 18px;
+    --tamanho-titulo-secao: 32px;
+    --tamanho-paragrafo: 17px;
+    --tamanho-resultado: 58px;
+    --tamanho-email: 32px;
+    --tamanho-menu: 16px;
+
+    --margem-lateral: 48px;
+    --espaco-secao: 104px;
+    --espaco-cards: 43px;
+    --espaco-hero-topo: 64px;
+    --espaco-cabecalho: 28px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+  :root {
+    --tamanho-logo: 28px;
+    --tamanho-titulo-principal: 88px;
+    --tamanho-subtitulo: 26px;
+    --tamanho-titulo-pagina: 64px;
+    --tamanho-card-titulo: 38px;
+    --tamanho-card-descricao: 20px;
+    --tamanho-titulo-secao: 38px;
+    --tamanho-paragrafo: 18px;
+    --tamanho-resultado: 70px;
+    --tamanho-email: 40px;
+    --tamanho-menu: 17px;
+
+    --margem-lateral: 120px;
+    --espaco-secao: 130px;
+    --espaco-cards: 46px;
+    --espaco-hero-topo: 80px;
+    --espaco-cabecalho: 32px;
+  }
+}
+
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: var(--espaco-zero);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+  font-size: var(--tamanho-paragrafo);
+  font-weight: var(--peso-regular);
+  line-height: var(--altura-linha-texto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: var(--espaco-zero);
+  font-family: var(--fonte-titulos);
+  font-weight: var(--peso-medio);
+  line-height: var(--altura-linha-titulo);
+  letter-spacing: var(--letras-titulo);
+}
+
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: var(--espaco-zero);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+/* Foco visível em links e botões (nunca remova o outline) */
+:focus-visible {
+  outline: var(--foco-largura) solid var(--cor-foco);
+  outline-offset: var(--foco-distancia);
+}
+
+/* Seleção de texto com a cor de destaque (decorativa) */
+::selection {
+  background-color: var(--cor-destaque);
+  color: var(--cor-texto);
+}
+
+/* ---- Container: mesma borda esquerda em todas as páginas ---- */
+.container {
+  width: 100%;
+  max-width: calc(var(--largura-conteudo) + (2 * var(--margem-lateral)));
+  margin-inline: auto;
+  padding-inline: var(--margem-lateral);
+}
+
+/* ---- Texto só para leitores de tela ---- */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: var(--espaco-zero);
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: var(--espaco-zero);
+}
+
+/* ---- Link "pular para o conteúdo" (aparece ao receber foco pelo teclado) ---- */
+.pular-conteudo {
+  position: absolute;
+  top: var(--espaco-xs);
+  left: var(--espaco-xs);
+  z-index: var(--camada-topo);
+  padding: var(--espaco-xs) var(--espaco-p);
+  border-radius: var(--raio-pilula);
+  background-color: var(--cor-botao-fundo);
+  color: var(--cor-botao-texto);
+  font-size: var(--tamanho-menu);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.pular-conteudo:focus {
+  transform: none;
+}
+
+/* ---- Animação de abertura (só no <main>) ---- */
+main {
+  animation: aparecer var(--animacao-duracao) var(--animacao-curva) both;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(var(--animacao-deslocamento));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Imagem: bloco cinza com proporção controlada por --proporcao ---- */
+.imagem {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--proporcao, var(--proporcao-padrao));
+  background-color: var(--cor-bloco-imagem);
+}
+
+.imagem img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  color: var(--cor-transparente);   /* esconde o texto alternativo se a foto faltar */
+  transition: transform var(--transicao);
+}
+
+/* Se o arquivo não existir, cobre o ícone quebrado com o bloco cinza */
+.imagem img::after {
+  content: "";
+  position: absolute;
+  inset: var(--espaco-zero);
+  background-color: var(--cor-bloco-imagem);
+}
+
+/* ---- Botão em formato pílula ---- */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--botao-altura);
+  padding-inline: var(--botao-padding-lateral);
+  border-radius: var(--raio-pilula);
+  background-color: var(--cor-botao-fundo);
+  color: var(--cor-botao-texto);
+  font-family: var(--fonte-texto);
+  font-size: var(--tamanho-menu);
+  font-weight: var(--peso-medio);
+  line-height: var(--altura-linha-numero);
+  text-decoration: none;
+  transition: background-color var(--transicao);
+}
+
+.botao:hover {
+  background-color: var(--cor-botao-hover);
+}
+
+/* ---- Bloco de texto corrido (parágrafos, listas e links) ---- */
+.texto > * + * {
+  margin-top: var(--espaco-p);
+}
+
+.texto p,
+.texto li {
+  font-size: var(--tamanho-paragrafo);
+  line-height: var(--altura-linha-texto);
+}
+
+.texto ul,
+.texto ol {
+  margin-bottom: var(--espaco-zero);
+  padding-left: var(--espaco-m);
+}
+
+.texto li + li {
+  margin-top: var(--espaco-xs);
+}
+
+.texto strong {
+  font-weight: var(--peso-negrito);
+}
+
+.texto a,
+.link {
+  color: var(--cor-link);
+  text-decoration: underline;
+  text-decoration-thickness: var(--sublinhado-espessura);
+  text-underline-offset: var(--sublinhado-distancia);
+}
+
+.texto a:hover,
+.link:hover {
+  text-decoration-thickness: var(--sublinhado-destaque);
+}
+
+/* ---- Títulos reutilizáveis ---- */
+.titulo-pagina {
+  font-size: var(--tamanho-titulo-pagina);
+  font-weight: var(--peso-medio);
+}
+
+.titulo-secao {
+  font-size: var(--tamanho-titulo-secao);
+  font-weight: var(--peso-medio);
+}
+
+/* Tracinho rosa decorativo acima do título de seção */
+.titulo-secao::before {
+  content: "";
+  display: block;
+  width: var(--marcador-largura);
+  height: var(--marcador-altura);
+  margin-bottom: var(--espaco-p);
+  background-color: var(--cor-destaque);
+}
+
+.titulo-secao + * {
+  margin-top: var(--espaco-m);
+}
+
+/* ---- Linha divisória ---- */
+.divisoria {
+  margin: var(--espaco-zero);
+  border: var(--espaco-zero);
+  border-top: var(--borda-fina) solid var(--cor-divisoria);
+}
+
+/* ---- Movimento reduzido: desliga animações e transições ---- */
+@media (prefers-reduced-motion: reduce) {
+  main {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ==========================================================================
+   3. CABEÇALHO
+   ========================================================================== */
+
+.cabecalho {
+  padding-block: var(--espaco-cabecalho);
+}
+
+.cabecalho-conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-xs) var(--espaco-m);
+}
+
+.logo {
+  font-family: var(--fonte-titulos);
+  font-size: var(--tamanho-logo);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+  letter-spacing: var(--letras-titulo);
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+/* Menu (usado no cabeçalho e no rodapé) */
+.menu-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-xs) var(--espaco-m);
+  margin: var(--espaco-zero);
+  padding: var(--espaco-zero);
+  list-style: none;
+}
+
+.menu-link {
+  display: inline-block;
+  padding-block: var(--espaco-xxs);
+  color: var(--cor-texto);
+  font-size: var(--tamanho-menu);
+  font-weight: var(--peso-regular);
+  text-decoration: none;
+  text-decoration-thickness: var(--sublinhado-destaque);
+  text-underline-offset: var(--sublinhado-distancia);
+}
+
+.menu-link:hover,
+.menu-link[aria-current="page"] {
+  text-decoration-line: underline;
+  text-decoration-color: var(--cor-destaque);
+}
+
+
+/* ==========================================================================
+   4. HOME
+   ========================================================================== */
+
+/* ---- Hero ---- */
+.hero {
+  padding-top: var(--espaco-hero-topo);
+  padding-bottom: var(--espaco-secao);
+}
+
+.hero-titulo {
+  font-size: var(--tamanho-titulo-principal);
+  font-weight: var(--peso-negrito);
+}
+
+.hero-subtitulo {
+  max-width: var(--largura-subtitulo);
+  margin-top: var(--espaco-m);
+  color: var(--cor-texto-secundario);
+  font-size: var(--tamanho-subtitulo);
+  font-weight: var(--peso-regular);
+  line-height: var(--altura-linha-subtitulo);
+}
+
+.hero-subtitulo strong {
+  color: var(--cor-texto);
+  font-weight: var(--peso-negrito);
+}
+
+/* ---- Grade de cases ---- */
+.cases {
+  padding-bottom: var(--espaco-secao);
+}
+
+.cases-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espaco-cards);
+}
+
+@media (min-width: 768px) {
+  .cases-grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Card inteiro clicável */
+.card-link {
+  display: block;
+  color: var(--cor-texto);
+  text-decoration: none;
+}
+
+.card-titulo {
+  margin-top: var(--espaco-m);
+  font-size: var(--tamanho-card-titulo);
+  font-weight: var(--peso-regular);
+  text-decoration-thickness: var(--sublinhado-destaque);
+  text-underline-offset: var(--sublinhado-distancia);
+}
+
+.card-descricao {
+  margin-top: var(--espaco-xs);
+  color: var(--cor-texto-secundario);
+  font-size: var(--tamanho-card-descricao);
+  line-height: var(--altura-linha-texto);
+}
+
+.card-link:hover .card-titulo {
+  text-decoration-line: underline;
+  text-decoration-color: var(--cor-destaque);
+}
+
+.card-link:hover .imagem img {
+  transform: scale(var(--zoom-imagem-hover));
+}
+
+/* ---- Bloco de contato (reutilizado em todas as páginas) ---- */
+.contato {
+  padding-bottom: var(--espaco-secao);
+}
+
+.contato-chamada {
+  font-size: var(--tamanho-menu);
+  font-weight: var(--peso-medio);
+}
+
+.contato-email {
+  display: inline-block;
+  margin-top: var(--espaco-xs);
+  color: var(--cor-texto);
+  font-family: var(--fonte-titulos);
+  font-size: var(--tamanho-email);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+  letter-spacing: var(--letras-titulo);
+  text-decoration: none;
+  text-decoration-thickness: var(--sublinhado-destaque);
+  text-underline-offset: var(--sublinhado-distancia);
+  overflow-wrap: anywhere;
+}
+
+.contato-email:hover {
+  text-decoration-line: underline;
+  text-decoration-color: var(--cor-destaque);
+}
+
+.contato-acoes {
+  margin-top: var(--espaco-m);
+}
+
+
+/* ==========================================================================
+   5. SOBRE
+   ========================================================================== */
+
+.sobre {
+  padding-top: var(--espaco-hero-topo);
+  padding-bottom: var(--espaco-secao);
+}
+
+/* Celular: uma coluna. A partir de 768px: texto à esquerda, foto à direita */
+.sobre-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espaco-g);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .sobre-grade {
+    grid-template-columns: minmax(0, var(--coluna-sobre)) minmax(0, 1fr);
+    gap: var(--espaco-cards);
+  }
+}
+
+.coluna-sobre {
+  max-width: var(--coluna-sobre);
+}
+
+.coluna-sobre .titulo-pagina + * {
+  margin-top: var(--espaco-m);
+}
+
+.sobre-foto {
+  width: 100%;
+  max-width: var(--largura-foto-sobre);
+}
+
+@media (min-width: 768px) {
+  .sobre-foto {
+    justify-self: end;
+  }
+}
+
+/* Seções extras da página sobre (experiência, ferramentas etc.) */
+.sobre-secao {
+  padding-bottom: var(--espaco-secao);
+}
+
+
+/* ==========================================================================
+   6. CASE
+   ========================================================================== */
+
+/* Coluna de leitura do case */
+.coluna-case {
+  max-width: var(--coluna-case);
+}
+
+/* ---- Abertura do case ---- */
+.case-cabecalho {
+  padding-top: var(--espaco-hero-topo);
+}
+
+.case-resumo {
+  max-width: var(--coluna-case);
+  margin-top: var(--espaco-m);
+  color: var(--cor-texto-secundario);
+  font-size: var(--tamanho-subtitulo);
+  line-height: var(--altura-linha-subtitulo);
+}
+
+/* Ficha técnica: papel, período, equipe, ferramentas */
+.case-ficha {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-m);
+  margin-top: var(--espaco-g);
+  padding-top: var(--espaco-m);
+  border-top: var(--borda-fina) solid var(--cor-divisoria);
+}
+
+@media (min-width: 768px) {
+  .case-ficha {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.case-ficha dt {
+  color: var(--cor-texto-secundario);
+  font-size: var(--tamanho-pequeno);
+  font-weight: var(--peso-medio);
+}
+
+.case-ficha dd {
+  margin-top: var(--espaco-xxs);
+  font-size: var(--tamanho-paragrafo);
+}
+
+/* Imagem de capa do case (use junto com .imagem) */
+.case-capa {
+  margin-top: var(--espaco-g);
+  --proporcao: var(--proporcao-capa-case);
+}
+
+/* ---- Seções do case (contexto, processo, solução...) ---- */
+.case-secao {
+  padding-top: var(--espaco-secao);
+}
+
+/* ---- Imagens com legenda ---- */
+.figura {
+  margin-top: var(--espaco-g);
+}
+
+.legenda {
+  margin-top: var(--espaco-xs);
+  color: var(--cor-texto-secundario);
+  font-size: var(--tamanho-pequeno);
+  line-height: var(--altura-linha-texto);
+}
+
+/* Galeria: 1 coluna no celular, 2 a partir de 768px */
+.galeria {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espaco-cards);
+  margin-top: var(--espaco-g);
+}
+
+@media (min-width: 768px) {
+  .galeria {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---- Resultados em números ---- */
+.resultados {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espaco-g);
+  margin-top: var(--espaco-g);
+  padding: var(--espaco-zero);
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .resultados {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--espaco-cards);
+  }
+}
+
+.resultado-numero {
+  display: block;
+  font-family: var(--fonte-titulos);
+  font-size: var(--tamanho-resultado);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-numero);
+  letter-spacing: var(--letras-titulo);
+}
+
+.resultado-texto {
+  display: block;
+  margin-top: var(--espaco-xs);
+  color: var(--cor-texto-secundario);
+  font-size: var(--tamanho-paragrafo);
+  line-height: var(--altura-linha-texto);
+}
+
+/* ---- Navegação para o próximo case ---- */
+.case-proximo {
+  padding-top: var(--espaco-secao);
+  padding-bottom: var(--espaco-secao);
+}
+
+.case-proximo-rotulo {
+  color: var(--cor-texto-secundario);
+  font-size: var(--tamanho-menu);
+}
+
+.case-proximo-link {
+  display: inline-block;
+  margin-top: var(--espaco-xs);
+  color: var(--cor-texto);
+  font-family: var(--fonte-titulos);
+  font-size: var(--tamanho-titulo-secao);
+  font-weight: var(--peso-medio);
+  line-height: var(--altura-linha-titulo);
+  letter-spacing: var(--letras-titulo);
+  text-decoration: none;
+  text-decoration-thickness: var(--sublinhado-destaque);
+  text-underline-offset: var(--sublinhado-distancia);
+}
+
+.case-proximo-link:hover {
+  text-decoration-line: underline;
+  text-decoration-color: var(--cor-destaque);
+}
+
+
+/* ==========================================================================
+   7. RODAPÉ
+   ========================================================================== */
+
+.rodape {
+  padding-bottom: var(--espaco-g);
+}
+
+.rodape-conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-p) var(--espaco-m);
+  padding-top: var(--espaco-m);
+  border-top: var(--borda-fina) solid var(--cor-divisoria);
+}
