@@ -1,0 +1,28 @@
+---
+import Chips from './Chips.astro';
+import { url } from '../lib/url';
+
+// Card de projeto da home: texto à esquerda, imagem (slot) à direita.
+interface Props {
+  href: string;
+  eyebrow: string;
+  titulo: string;
+  descricao: string;
+  tags: string[];
+}
+
+const { href, eyebrow, titulo, descricao, tags } = Astro.props;
+---
+
+<article class="projeto">
+  <div class="projeto-texto">
+    <p class="projeto-eyebrow">{eyebrow}</p>
+    <h3 class="projeto-titulo"><a class="projeto-link" href={url(href)}>{titulo}</a></h3>
+    <p class="projeto-descricao">{descricao}</p>
+    <Chips itens={tags} />
+    <p class="projeto-cta" aria-hidden="true">Ver case completo →</p>
+  </div>
+  <div class="projeto-imagem">
+    <slot />
+  </div>
+</article>

@@ -1,43 +1,251 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CaseCard from '../components/CaseCard.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import Chips from '../components/Chips.astro';
+import Botao from '../components/Botao.astro';
+import ProjetoCard from '../components/ProjetoCard.astro';
+import IlustracaoDashboard from '../components/IlustracaoDashboard.astro';
+import TimelineItem from '../components/TimelineItem.astro';
+import FeedbackCard from '../components/FeedbackCard.astro';
+import { url } from '../lib/url';
 ---
 
-<BaseLayout title="Djara | Designer de UI/UX" description="Portfólio de Djara, designer de UI/UX.">
+<BaseLayout title="Djara Galvão | UX/UI Designer" description="Portfólio de Djara Galvão, UX/UI Designer em Fortaleza. Produtos de dados, UX Research e UI Design.">
 
   <!-- ================= HERO ================= -->
-  <section class="hero" aria-labelledby="titulo-principal">
+  <section class="hero" id="inicio" aria-labelledby="titulo-principal">
     <div class="container">
-      <h1 class="hero-titulo" id="titulo-principal">Olá, me chamo Djara</h1>
-      <p class="hero-subtitulo">Designer de UI/UX com foco em interfaces simples e acessíveis. Atualmente, desenho produtos digitais e conduzo pesquisas com usuários no <strong>Instituto Atlântico</strong>.</p>
+      <p class="hero-saudacao">
+        <!-- IMAGEM: coloque sua foto em public/img/perfil.jpeg -->
+        <span class="imagem hero-foto"><img src={url('img/perfil.jpeg')} alt=""></span>
+        Oi, eu sou a Djara — UX/UI Designer em Fortaleza
+      </p>
+
+      <h1 class="hero-titulo" id="titulo-principal">Transformo dados complexos em interfaces <span class="destaque-serif">claras.</span></h1>
+
+      <p class="hero-lead">Hoje projeto uma plataforma de dados socioambientais no Instituto Atlântico, como única designer de um time de 9 pessoas. Antes do UX, foram 10 anos de design visual.</p>
+
+      <Chips itens={['Produtos de dados', 'UX Research', 'UI Design', 'IA no processo']} />
+
+      <div class="botoes">
+        <Botao href="#projetos">Ver projetos ↓</Botao>
+        <!-- CURRÍCULO: coloque o arquivo em public/curriculo.pdf -->
+        <Botao href={url('curriculo.pdf')} variante="secundario" externo>Baixar currículo</Botao>
+      </div>
+
+      <dl class="numeros">
+        <div>
+          <dt class="numero-valor">10 anos</dt>
+          <dd class="numero-texto">em design visual antes do UX</dd>
+        </div>
+        <div>
+          <dt class="numero-valor">1 de 9</dt>
+          <dd class="numero-texto">única designer no time multidisciplinar</dd>
+        </div>
+        <div>
+          <dt class="numero-valor">P&amp;D</dt>
+          <dd class="numero-texto">setor elétrico · dados socioambientais</dd>
+        </div>
+      </dl>
     </div>
   </section>
 
-  <!-- ================= CASES ================= -->
-  <section class="cases" aria-labelledby="titulo-cases">
+  <!-- ================= 01 PROJETOS ================= -->
+  <section class="secao secao-superficie" id="projetos" aria-labelledby="titulo-projetos">
     <div class="container">
-      <h2 class="visualmente-oculto" id="titulo-cases">Projetos</h2>
+      <div class="secao-cabecalho">
+        <Eyebrow numero="01" rotulo="Projetos" />
+        <h2 class="secao-titulo" id="titulo-projetos">Cases selecionados</h2>
+      </div>
 
-      <div class="cases-grade">
+      <div class="projetos-lista">
 
-        <!-- CASE 1: copie um <CaseCard /> para adicionar mais (imagens ficam em public/img) -->
-        <CaseCard
-          href="case-1/"
-          img="img/case-1-capa.jpg"
-          alt="Telas do app de agendamento de consultas em um notebook e em um celular"
-          title="App de Agendamento"
-          description="Redesign de um app de agendamento de consultas, focado em reduzir as etapas até a confirmação e diminuir as faltas dos pacientes."
-        />
+        <!-- CASE 1: copie um <ProjetoCard> para adicionar mais -->
+        <ProjetoCard
+          href="cases/plataforma-dados/"
+          eyebrow="Instituto Atlântico · P&D setor elétrico"
+          titulo="Plataforma de dados socioambientais"
+          descricao="Analistas e gestores precisavam ler indicadores de dezenas de projetos rápido. Como única designer de um time de 9 pessoas, desenhei fluxos, protótipos e dashboards que equilibram densidade de dados e legibilidade."
+          tags={['Produto de dados', 'Dashboards', 'Projeto sob NDA']}
+        >
+          <IlustracaoDashboard />
+          <p class="projeto-legenda">Ilustração genérica · telas reais sob NDA</p>
+        </ProjetoCard>
 
         <!-- CASE 2 -->
-        <CaseCard
-          href="case-2/"
-          img="img/case-2-capa.jpg"
-          alt="Painel financeiro com gráficos de fluxo de caixa exibido em um notebook"
-          title="Painel Financeiro"
-          description="Um painel para pequenas empresas, focado em tornar a leitura do fluxo de caixa clara para quem não é da área financeira."
-        />
+        <ProjetoCard
+          href="cases/smartwatch/"
+          eyebrow="Bootcamp UX · Atlântico Avanti 2025"
+          titulo="Smartwatch para pessoas idosas"
+          descricao="5 entrevistas mostraram que o medo não era da tecnologia, e sim de se sentir incapaz. A solução priorizou a emergência: acionada por voz ou por toque, com o mesmo resultado."
+          tags={['UX Research', 'UI Design', 'Product Owner']}
+        >
+          <!-- IMAGEM: coloque a capa do case aqui, ex.: <img src={url('img/smartwatch-capa.png')} alt="..."> -->
+        </ProjetoCard>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 EXPERIÊNCIA ================= -->
+  <section class="secao" id="experiencia" aria-labelledby="titulo-experiencia">
+    <div class="container">
+      <div class="secao-cabecalho">
+        <Eyebrow numero="02" rotulo="Experiência" />
+        <h2 class="secao-titulo" id="titulo-experiencia">Minha trajetória</h2>
+        <p class="secao-subtitulo">Do design visual ao design de produto: a base em interface e apresentação para stakeholders hoje sustenta meu trabalho em UX.</p>
+      </div>
+
+      <ol class="timeline">
+        <!-- EXPERIÊNCIA: copie um <TimelineItem> para adicionar mais (atual = marcador roxo) -->
+        <TimelineItem
+          atual
+          periodo="Jan 2026 · atual"
+          empresa="Instituto Atlântico"
+          cargo="UX/UI Designer (Estágio) · Fortaleza"
+          descricao="Única designer de um time de 9 pessoas em um projeto de P&D do setor elétrico. Fluxos de navegação, protótipos no Figma, dashboards e validação junto com produto, ciência de dados e engenharia."
+        />
+        <TimelineItem
+          periodo="Ago 2024 · Jan 2026"
+          empresa="Freelance"
+          cargo="UI Designer / Visual Designer"
+          descricao="Design digital sob demanda para marcas e pequenos negócios."
+        />
+        <TimelineItem
+          periodo="Out 2020 · Jun 2024"
+          empresa="Vita Joalheria"
+          cargo="Designer"
+          descricao="Responsável por toda a comunicação visual da marca, direção de fotografia e apresentação de projetos."
+        />
+        <TimelineItem
+          periodo="2014 · 2022"
+          empresa="Base em design visual"
+          cargo="Libel Comunicação, Lenita, Say So, DHORUM e outras"
+          descricao="Layouts digitais, identidade visual, e-mail marketing e planejamento com times de marketing."
+        />
+      </ol>
+
+      <ul class="formacao" aria-label="Formação">
+        <!-- FORMAÇÃO: copie um <li> para adicionar mais -->
+        <li class="formacao-item">
+          <p class="rotulo">Formação</p>
+          <h3 class="formacao-nome">CST Design Digital (UX)</h3>
+          <p class="formacao-detalhe">UniCarioca · 2025–2027</p>
+        </li>
+        <li class="formacao-item">
+          <p class="rotulo">Formação</p>
+          <h3 class="formacao-nome">Google UX Design Certificate</h3>
+          <p class="formacao-detalhe">Coursera · 2025</p>
+        </li>
+        <li class="formacao-item">
+          <p class="rotulo">Formação</p>
+          <h3 class="formacao-nome">Bootcamp Experiência do Usuário</h3>
+          <p class="formacao-detalhe">Atlântico Avanti · 2025</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= 03 FEEDBACKS ================= -->
+  <section class="secao secao-destaque" id="feedbacks" aria-labelledby="titulo-feedbacks">
+    <div class="container">
+      <div class="secao-cabecalho">
+        <Eyebrow numero="03" rotulo="Feedbacks" />
+        <h2 class="secao-titulo" id="titulo-feedbacks">O que dizem do meu trabalho</h2>
+        <p class="secao-subtitulo">Meus projetos no Atlântico são confidenciais. Então deixo quem trabalhou comigo contar como é.</p>
+      </div>
+
+      <div class="feedbacks-lista">
+        <!-- FEEDBACK: copie um <FeedbackCard> para adicionar mais (troque o link do LinkedIn) -->
+        <FeedbackCard
+          destaque="O diferencial da Djara é a facilidade em sintetizar o que o cliente precisa, a viabilidade técnica e o que a equipe sugere."
+          texto="Une design e requisitos técnicos em interfaces e visualizações de dados extremamente claras e funcionais. Muito estudiosa, comunicação excelente e empatia com as necessidades dos usuários."
+          nome="Sibeline Marques"
+          cargo="QA · Instituto Atlântico"
+          relacao="Trabalhou na mesma equipe · set 2026"
+          iniciais="SM"
+          linkedin="https://www.linkedin.com/in/perfil-sibeline"
+        />
+        <FeedbackCard
+          destaque="Destaco sua dedicação em ampliar os conhecimentos para além de UX/UI, integrando estudos em Power BI e Inteligência Artificial."
+          texto="Uma profissional comprometida, responsável e aberta a novos desafios, com iniciativa e curiosidade para entender como dados e tecnologia apoiam usuários e negócio."
+          nome="Lucelia Saraiva"
+          cargo="Gerente de Projetos · Instituto Atlântico"
+          relacao="Supervisionava Djara diretamente · set 2026"
+          iniciais="LS"
+          linkedin="https://www.linkedin.com/in/perfil-lucelia"
+        />
+      </div>
+
+      <p class="feedbacks-mais">+ feedbacks de PO, devs e UX a caminho (aguardando autorização)</p>
+    </div>
+  </section>
+
+  <!-- ================= 04 COMO TRABALHO ================= -->
+  <section class="secao" id="como-trabalho" aria-labelledby="titulo-processo">
+    <div class="container">
+      <div class="secao-cabecalho">
+        <Eyebrow numero="04" rotulo="Como trabalho" />
+        <h2 class="secao-titulo" id="titulo-processo">Processo e ferramentas</h2>
+      </div>
+
+      <ol class="etapas">
+        <li class="etapa">
+          <p class="etapa-numero">01</p>
+          <h3 class="etapa-titulo">Entender</h3>
+          <p class="etapa-texto">Desk research, entrevistas e conversa com stakeholders e dados.</p>
+        </li>
+        <li class="etapa">
+          <p class="etapa-numero">02</p>
+          <h3 class="etapa-titulo">Definir</h3>
+          <p class="etapa-texto">Requisitos, fluxos e arquitetura da informação com PO e dev.</p>
+        </li>
+        <li class="etapa">
+          <p class="etapa-numero">03</p>
+          <h3 class="etapa-titulo">Prototipar</h3>
+          <p class="etapa-texto">Wireframes e protótipos no Figma, acelerados com IA.</p>
+        </li>
+        <li class="etapa">
+          <p class="etapa-numero">04</p>
+          <h3 class="etapa-titulo">Validar</h3>
+          <p class="etapa-texto">Testes, review com QA e ajustes a cada sprint.</p>
+        </li>
+      </ol>
+
+      <dl class="ferramentas">
+        <div class="ferramentas-grupo">
+          <dt class="rotulo">Design</dt>
+          <dd><Chips itens={['Figma', 'FigJam', 'Miro', 'Framer']} /></dd>
+        </div>
+        <div class="ferramentas-grupo">
+          <dt class="rotulo">Produto</dt>
+          <dd><Chips itens={['Jira', 'Notion', 'Scrum/Kanban', 'Power BI']} /></dd>
+        </div>
+        <div class="ferramentas-grupo">
+          <dt class="rotulo">IA</dt>
+          <dd><Chips itens={['Claude', 'Figma Make', 'Figma MCP']} /></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ================= 05 SOBRE ================= -->
+  <section class="secao secao-superficie" id="sobre" aria-labelledby="titulo-sobre">
+    <div class="container sobre-grade">
+      <!-- IMAGEM: troque o arquivo public/img/perfil.jpeg -->
+      <div class="imagem sobre-foto">
+        <img src={url('img/perfil.jpeg')} alt="Foto de Djara Galvão">
+      </div>
+
+      <div class="sobre-texto">
+        <Eyebrow numero="05" rotulo="Sobre" />
+        <h2 class="secao-titulo" id="titulo-sobre">Prazer, Djara.</h2>
+        <p class="texto-lead texto-secundario">Cheguei ao UX depois de quase 10 anos em design visual: marcas, direção de arte, fotografia e gestão de projetos. Isso me deu olhar apurado para interface e muita prática em apresentar ideias e negociar com stakeholders.</p>
+        <p class="texto-lead">Hoje meu foco são produtos com muitos dados, onde a clareza da interface faz toda a diferença.</p>
+        <div class="botoes">
+          <Botao href={url('curriculo.pdf')} externo>Baixar currículo</Botao>
+          <Botao href="https://www.linkedin.com/in/seu-perfil" variante="secundario" externo>LinkedIn ↗</Botao>
+        </div>
       </div>
     </div>
   </section>

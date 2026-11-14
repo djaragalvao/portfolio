@@ -1,0 +1,12 @@
+---
+// Lista de etiquetas em formato pílula
+interface Props {
+  itens: string[];
+}
+
+const { itens } = Astro.props;
+---
+
+<ul class="chips">
+  {itens.map((item) => <li class="chip">{item}</li>)}
+</ul>

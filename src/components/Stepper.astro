@@ -1,0 +1,20 @@
+---
+// Passos numerados ligados por uma linha (sprint, 5 planos).
+// "ativos" lista os passos preenchidos, começando em 1.
+interface Props {
+  passos: { titulo: string; texto: string }[];
+  ativos?: number[];
+}
+
+const { passos, ativos = [] } = Astro.props;
+---
+
+<ol class="stepper">
+  {passos.map((passo, i) => (
+    <li class:list={['stepper-passo', { 'stepper-passo-ativo': ativos.includes(i + 1) }]}>
+      <span class="stepper-marcador" aria-hidden="true"></span>
+      <p class="stepper-titulo">{String(i + 1).padStart(2, '0')}&nbsp; {passo.titulo}</p>
+      <p class="stepper-texto">{passo.texto}</p>
+    </li>
+  ))}
+</ol>

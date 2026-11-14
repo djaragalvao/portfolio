@@ -1,0 +1,15 @@
+---
+// "01 —— PROJETOS": número em destaque, linha curta e rótulo
+interface Props {
+  numero: string;
+  rotulo: string;
+}
+
+const { numero, rotulo } = Astro.props;
+---
+
+<p class="eyebrow">
+  <span class="eyebrow-numero">{numero}</span>
+  <span class="eyebrow-linha" aria-hidden="true"></span>
+  {rotulo}
+</p>

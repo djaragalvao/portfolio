@@ -1,20 +1,61 @@
 ---
-import { url, isCurrent } from '../lib/url';
+import ThemeToggle from './ThemeToggle.astro';
+import { url } from '../lib/url';
 
-const { pathname } = Astro.url;
+// Links da navegação: cada um aponta para o id de uma seção da home
+const links = [
+  { id: 'inicio', texto: 'Início' },
+  { id: 'projetos', texto: 'Projetos' },
+  { id: 'experiencia', texto: 'Experiência' },
+  { id: 'feedbacks', texto: 'Feedbacks' },
+  { id: 'sobre', texto: 'Sobre' },
+  { id: 'contato', texto: 'Contato' },
+];
 ---
 
-<header class="cabecalho">
-  <div class="container cabecalho-conteudo">
-    <a class="logo" href={url()} aria-label="Djara, página inicial">V.</a>
+<header class="nav">
+  <div class="container nav-conteudo">
+    <a class="logo" href={url()} aria-label="Djara Galvão, página inicial">Djara Galvão<span class="logo-ponto" aria-hidden="true"> .</span></a>
 
-    <nav aria-label="Menu principal">
-      <ul class="menu-lista">
-        <li><a class="menu-link" href={url()} aria-current={isCurrent(pathname, '') ? 'page' : undefined}>Início</a></li>
-        <li><a class="menu-link" href={url('sobre/')} aria-current={isCurrent(pathname, 'sobre/') ? 'page' : undefined}>Sobre</a></li>
-        <li><a class="menu-link" href={url('curriculo.pdf')} target="_blank" rel="noopener">Currículo<span class="visualmente-oculto"> (abre em nova aba)</span></a></li>
-        <li><a class="menu-link" href="https://www.linkedin.com/in/seu-perfil" target="_blank" rel="noopener">LinkedIn<span class="visualmente-oculto"> (abre em nova aba)</span></a></li>
+    <nav class="nav-menu" aria-label="Menu principal">
+      <ul class="nav-links">
+        {links.map((link, i) => (
+          <li><a class="nav-link" href={`#${link.id}`} data-nav-link aria-current={i === 0 ? 'true' : undefined}>{link.texto}</a></li>
+        ))}
       </ul>
     </nav>
+
+    <div class="nav-acoes">
+      <ThemeToggle />
+      <!-- IDIOMA: o EN fica desativado até existir a versão em inglês -->
+      <div class="idioma" role="group" aria-label="Idioma">
+        <span class="idioma-opcao" aria-current="true">PT</span>
+        <span class="idioma-opcao" aria-disabled="true" title="Versão em inglês em breve">EN</span>
+      </div>
+    </div>
   </div>
 </header>
+
+<script>
+  // Marca no menu a seção que está visível na tela
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+  const secoes = new Map<Element, HTMLAnchorElement>();
+
+  links.forEach((link) => {
+    const secao = document.getElementById(link.hash.slice(1));
+    if (secao) secoes.set(secao, link);
+  });
+
+  const observador = new IntersectionObserver(
+    (entradas) => {
+      entradas.forEach((entrada) => {
+        if (!entrada.isIntersecting) return;
+        links.forEach((link) => link.removeAttribute('aria-current'));
+        secoes.get(entrada.target)?.setAttribute('aria-current', 'true');
+      });
+    },
+    { rootMargin: '-35% 0px -60% 0px' },
+  );
+
+  secoes.forEach((_, secao) => observador.observe(secao));
+</script>

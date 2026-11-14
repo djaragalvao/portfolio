@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseAbertura from '../../components/CaseAbertura.astro';
+import CaseFicha from '../../components/CaseFicha.astro';
+import IlustracaoDashboard from '../../components/IlustracaoDashboard.astro';
+import Stepper from '../../components/Stepper.astro';
+import FeedbackCard from '../../components/FeedbackCard.astro';
+import ProximoCase from '../../components/ProximoCase.astro';
+
+// Esteira de trabalho: "eu" destaca a etapa da Djara
+const esteira = [
+  { nome: 'Cientista de dados', papel: 'modela os indicadores' },
+  { nome: 'Engenharia de dados', papel: 'disponibiliza os dados' },
+  { nome: 'PO', papel: 'prioriza e define regras' },
+  { nome: 'UX/UI · eu', papel: 'fluxos, protótipos e validação', eu: true },
+  { nome: 'Dev', papel: 'implementa' },
+  { nome: 'QA', papel: 'testa e valida' },
+];
+---
+
+<BaseLayout variante="case" title="Plataforma de dados socioambientais | Djara Galvão" description="Case de UX/UI: plataforma de dados socioambientais no Instituto Atlântico, projeto de P&D do setor elétrico.">
+
+  <!-- ================= ABERTURA ================= -->
+  <CaseAbertura
+    eyebrow="Instituto Atlântico · P&D setor elétrico"
+    titulo="Plataforma de dados socioambientais"
+    lead="Como única designer de um time de 9 pessoas, transformo dados técnicos em fluxos e dashboards que analistas e gestores leem em segundos."
+    tags={['Produto de dados', 'Dashboards', 'Projeto sob NDA']}
+  >
+    <IlustracaoDashboard />
+
+    <Fragment slot="depois">
+      <CaseFicha itens={[
+        { rotulo: 'Meu papel', valor: 'UX/UI Designer · única designer do time' },
+        { rotulo: 'Contexto', valor: 'P&D regulado no setor elétrico' },
+        { rotulo: 'Equipe', valor: 'PO, devs, DevOps, cientista e engenheiros de dados, QA e gerente (9 pessoas)' },
+        { rotulo: 'Período', valor: 'Jan 2026 · atual' },
+      ]} />
+
+      <p class="aviso"><span aria-hidden="true">🔒</span> <span>Projeto sob NDA: não mostro telas reais nem dados. Os artefatos abaixo foram recriados para explicar meu processo. Na entrevista, apresento o trabalho em detalhes.</span></p>
+    </Fragment>
+  </CaseAbertura>
+
+  <!-- ================= O DESAFIO ================= -->
+  <section class="case-secao secao-superficie" aria-labelledby="titulo-desafio">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-desafio">O desafio</h2>
+      <p class="case-texto-grande">Analistas e gestores técnicos precisam acompanhar indicadores de dezenas de projetos socioambientais. Os dados são muitos e complexos: o desafio é equilibrar densidade de informação e legibilidade, para que a decisão seja rápida.</p>
+    </div>
+  </section>
+
+  <!-- ================= COMO O TRABALHO FLUI ================= -->
+  <section class="case-secao" aria-labelledby="titulo-fluxo-trabalho">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-fluxo-trabalho">Como o trabalho flui</h2>
+      <p class="case-intro">O dado nasce na ciência de dados e chega ao usuário pela interface. Meu papel é traduzir o que os dados permitem e o que o produto precisa em fluxos que o time consegue construir.</p>
+
+      <ol class="esteira">
+        {esteira.map((etapa, i) => (
+          <li class:list={['esteira-etapa', { 'esteira-etapa-eu': etapa.eu }]}>
+            <div class="esteira-caixa">
+              <p class="esteira-nome">{etapa.nome}</p>
+              <p class="esteira-papel">{etapa.papel}</p>
+            </div>
+            {i < esteira.length - 1 && <span class="esteira-seta" aria-hidden="true">→</span>}
+          </li>
+        ))}
+      </ol>
+
+      <p class="esteira-loop"><span aria-hidden="true">↺</span> Feedback do QA e dos usuários volta para UX e PO a cada sprint</p>
+    </div>
+  </section>
+
+  <!-- ================= MINHA SPRINT ================= -->
+  <section class="case-secao secao-superficie" aria-labelledby="titulo-sprint">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-sprint">Como é uma sprint para mim</h2>
+      <Stepper
+        ativos={[3]}
+        passos={[
+          { titulo: 'Refinamento', texto: 'Entendo a regra com PO e dados' },
+          { titulo: 'Rabiscos', texto: 'Esboço no caderno e fluxo no FigJam' },
+          { titulo: 'Protótipo', texto: 'Telas no Figma, com apoio de IA' },
+          { titulo: 'Validação', texto: 'Revisão com produto e ciência de dados' },
+          { titulo: 'Handoff', texto: 'Specs para dev e review com QA' },
+        ]}
+      />
+    </div>
+  </section>
+
+  <!-- ================= DECISÕES DE DESIGN ================= -->
+  <section class="case-secao" aria-labelledby="titulo-decisoes">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-decisoes">Decisões de design</h2>
+
+      <ol class="decisoes">
+        <!-- DECISÃO: copie um <li> para adicionar mais -->
+        <li>
+          <h3 class="decisao-titulo">01.&nbsp; Densidade controlada</h3>
+          <p class="decisao-texto">Mostrar só o indicador que leva à decisão; o detalhe fica um clique abaixo. [Djara: complete com um exemplo sem dados reais]</p>
+        </li>
+        <li>
+          <h3 class="decisao-titulo">02.&nbsp; Hierarquia da informação</h3>
+          <p class="decisao-texto">O status de cada projeto é a primeira coisa que o olho encontra: cor, posição e tamanho seguem essa ordem. [complete]</p>
+        </li>
+        <li>
+          <h3 class="decisao-titulo">03.&nbsp; Feedback visual preciso</h3>
+          <p class="decisao-texto">Estados de carregamento, erro e dado vazio desenhados desde o início, junto com engenharia. [complete]</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= ARTEFATOS RECRIADOS ================= -->
+  <section class="case-secao secao-superficie" aria-labelledby="titulo-artefatos">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-artefatos">Artefatos recriados</h2>
+      <p class="case-intro">Mão na massa: registros do processo refeitos sem dados nem telas do projeto.</p>
+
+      <!-- IMAGENS: troque cada placeholder por <div class="imagem artefato"><img src={url('img/...')} alt="..."></div> -->
+      <ul class="grade-3">
+        <li class="placeholder artefato">Imagem: Foto dos rabiscos no caderno</li>
+        <li class="placeholder artefato">Imagem: Fluxo de navegação recriado (sem dados)</li>
+        <li class="placeholder artefato">Imagem: Wireframe em baixa fidelidade</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= O QUE APRENDI ================= -->
+  <section class="case-secao" aria-labelledby="titulo-aprendi">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-aprendi">O que aprendi</h2>
+      <ul class="case-lista">
+        <li>Em produtos de análise de dados, hierarquia, densidade e feedback visual pesam mais do que em produtos de consumo.</li>
+        <li>Participar das decisões desde o início vale mais do que só entregar telas.</li>
+      </ul>
+
+      <FeedbackCard
+        destaque="Une design e requisitos técnicos em interfaces e visualizações de dados extremamente claras e funcionais."
+        nota="Feedback recebido no LinkedIn, set 2026."
+        nome="Sibeline Marques"
+        cargo="QA · Instituto Atlântico"
+        relacao="Trabalhou na mesma equipe"
+        iniciais="SM"
+        linkedin="https://www.linkedin.com/in/perfil-sibeline"
+      />
+    </div>
+  </section>
+
+  <ProximoCase href="cases/smartwatch/" titulo="Smartwatch para pessoas idosas" />
+
+</BaseLayout>
