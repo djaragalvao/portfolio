@@ -1,0 +1,23 @@
+---
+import { url } from '../lib/url';
+
+interface Props {
+  href: string;
+  img: string;
+  alt: string;
+  title: string;
+  description: string;
+}
+
+const { href, img, alt, title, description } = Astro.props;
+---
+
+<article class="card">
+  <a class="card-link" href={url(href)}>
+    <div class="imagem">
+      <img src={url(img)} alt={alt}>
+    </div>
+    <h3 class="card-titulo">{title}</h3>
+    <p class="card-descricao">{description}</p>
+  </a>
+</article>
