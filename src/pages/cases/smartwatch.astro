@@ -1,0 +1,353 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseAbertura from '../../components/CaseAbertura.astro';
+import CaseFicha from '../../components/CaseFicha.astro';
+import Stepper from '../../components/Stepper.astro';
+import Botao from '../../components/Botao.astro';
+import ProximoCase from '../../components/ProximoCase.astro';
+import { url } from '../../lib/url';
+
+// Cronograma: 8 semanas divididas em 32 colunas (4 por semana).
+// "inicio" e "fim" são as linhas da grade; ui = barra escura (fase de UI).
+const cronograma = [
+  { nome: 'Equipe e processo', inicio: 1, fim: 6 },
+  { nome: 'Desk, CSD, proto-persona', inicio: 6, fim: 11 },
+  { nome: 'Entrevistas', inicio: 9, fim: 14 },
+  { nome: 'Afinidades e requisitos', inicio: 13, fim: 18 },
+  { nome: 'Fluxo e priorização', inicio: 16, fim: 23 },
+  { nome: 'Rabiscoframes', inicio: 23, fim: 28, ui: true },
+  { nome: 'Protótipo hi-fi', inicio: 26, fim: 32, ui: true },
+];
+
+const csd = [
+  {
+    titulo: 'Certezas',
+    classe: 'csd-certezas',
+    itens: [
+      'Smartwatch traz mais segurança e autonomia.',
+      'Funções intuitivas aumentam a aceitação.',
+      'Textos pequenos e baixo contraste dificultam a leitura.',
+      'Telas retangulares aproveitam melhor o espaço.',
+    ],
+  },
+  {
+    titulo: 'Suposições',
+    classe: 'csd-suposicoes',
+    itens: [
+      'A motivação é mais saúde e segurança do que lazer.',
+      'Sem perceber benefícios, o público sênior pode recusar o uso.',
+      'O SOS precisa estar sempre visível na tela principal.',
+      'A linguagem técnica causa ansiedade e confusão.',
+    ],
+  },
+  {
+    titulo: 'Dúvidas',
+    classe: 'csd-duvidas',
+    itens: [
+      'Quais funções são cruciais para comprar e usar?',
+      'Quais práticas de acessibilidade são essenciais?',
+      'Qual o tamanho mínimo de fonte e botão sem poluir?',
+      'Qual o fluxo de navegação mais intuitivo?',
+    ],
+  },
+];
+
+const citacoes = [
+  { texto: 'As letras são muito pequenas, né? Queria que fossem maiores.', autor: 'User 05' },
+  { texto: 'Importante ter uma função de emergência e queda que conseguisse acionar ajuda ou contatos familiares.', autor: 'User 04' },
+  { texto: 'Eu acho que utilizar o relógio com comando de voz seria muito bom.', autor: 'User 01' },
+  { texto: 'O que me motiva a usar é o cuidado com a minha saúde e a independência que ele me dá.', autor: 'User 03' },
+];
+
+// "foco" destaca o requisito escolhido na priorização
+const requisitos = [
+  {
+    usuario: 'de funções de saúde precisas e confiáveis, fáceis de configurar e integradas ao app.',
+    funcional: 'permitir registrar, monitorar e ver dados de saúde: batimentos, passos, sono e alertas de medicação.',
+  },
+  {
+    usuario: 'de funções de segurança e emergência de fácil acesso.',
+    funcional: 'oferecer funções de emergência claras e fáceis de achar, ativadas por toque na tela ou comando de voz.',
+    foco: true,
+  },
+  {
+    usuario: 'que smartwatch e celular fiquem sincronizados, incluindo comando de voz e alarmes.',
+    funcional: 'capturar comandos de voz, processar no celular e mostrar o resultado no relógio.',
+  },
+];
+
+// IMAGENS: coloque telas_1.png ... telas_6.png em public/img e troque o placeholder pela imagem
+const telas = [
+  { arquivo: 'telas_1.png', titulo: 'Acessibilidade visual', texto: 'Botões grandes com cores de alto contraste.' },
+  { arquivo: 'telas_2.png', titulo: 'Priorização da leitura', texto: 'O padrão em smartwatches é texto de 16px; usamos 20px para priorizar clareza.' },
+  { arquivo: 'telas_3.png', titulo: 'UX Writing', texto: 'Linguagem simples, com termos diretos e literais.' },
+  { arquivo: 'telas_4.png', titulo: 'Comando de voz', texto: 'Alternativa ao toque, útil em momentos de estresse ou dificuldade motora.' },
+  { arquivo: 'telas_5.png', titulo: 'Acesso rápido à emergência', texto: 'Contatos pré-configurados acionados em dois toques ou por voz.' },
+  { arquivo: 'telas_6.png', titulo: 'Endereço na tela de ligação', texto: 'A pessoa informa a localização ao socorro sem sair da chamada.' },
+];
+
+const cores = [
+  { hex: '#FF383C', nome: 'SOS', variavel: '--cor-sw-sos' },
+  { hex: '#3D40E3', nome: 'Contatos', variavel: '--cor-sw-contatos' },
+  { hex: '#34C759', nome: 'Polícia', variavel: '--cor-sw-policia' },
+  { hex: '#FE8104', nome: 'Saúde', variavel: '--cor-sw-saude' },
+  { hex: '#000000', nome: 'Fundo', variavel: '--cor-sw-fundo' },
+];
+
+const tipos = [
+  { nome: 'Title 1', valor: '25px · Bold' },
+  { nome: 'Title 2', valor: '20px · Bold' },
+  { nome: 'Title 3', valor: '18px · Bold' },
+  { nome: 'Text 1', valor: '16px · Bold' },
+];
+---
+
+<BaseLayout variante="case" title="Smartwatch para pessoas idosas | Djara Galvão" description="Case de UX: pesquisa e solução de emergência por voz ou toque em um smartwatch para pessoas idosas.">
+
+  <!-- ================= ABERTURA ================= -->
+  <CaseAbertura
+    eyebrow="Bootcamp UX · Atlântico Avanti 2025"
+    titulo="Smartwatch para pessoas idosas"
+    lead="Investiguei por que pessoas idosas têm dificuldade com smartwatches. A pesquisa levou a uma solução focada em emergência, acionada por voz ou toque."
+    tags={['UX Research', 'UI Design', 'Product Owner']}
+  >
+    <!-- IMAGEM: capa do case, ex.: <img src={url('img/smartwatch-capa.png')} alt="..."> -->
+
+    <Fragment slot="depois">
+      <CaseFicha itens={[
+        { rotulo: 'Meu papel', valor: 'Product Owner, UX Researcher e UI Designer' },
+        { rotulo: 'Tipo', valor: 'Projeto de bootcamp, em grupo' },
+        { rotulo: 'Equipe', valor: 'Squad Tatsumari' },
+        { rotulo: 'Período', valor: '8 semanas · 2025' },
+      ]} />
+    </Fragment>
+  </CaseAbertura>
+
+  <!-- ================= O QUE EU FIZ ================= -->
+  <section class="case-secao" aria-labelledby="titulo-fiz">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-fiz">O que eu fiz</h2>
+      <p class="case-texto-grande">Como Product Owner, organizei a equipe, cuidei do backlog e das prioridades, fiz a ponte com os professores e apresentei o projeto. Como UX, conduzi desk research, matriz CSD, entrevistas e síntese, e desenhei a interface e o protótipo.</p>
+    </div>
+  </section>
+
+  <!-- ================= METODOLOGIA ================= -->
+  <section class="case-secao secao-superficie" aria-labelledby="titulo-metodologia">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-metodologia">Metodologia · 5 planos da experiência do usuário</h2>
+      <p class="case-intro">Do mais abstrato ao mais concreto. A maior parte das 8 semanas foi para o discovery, antes de qualquer tela.</p>
+
+      <Stepper
+        ativos={[1, 2]}
+        passos={[
+          { titulo: 'Estratégia', texto: 'Desk research e matriz CSD' },
+          { titulo: 'Escopo', texto: 'Entrevistas, persona e requisitos' },
+          { titulo: 'Estrutura', texto: 'Matriz impacto-esforço e fluxo' },
+          { titulo: 'Esqueleto', texto: 'Rabiscoframes' },
+          { titulo: 'Superfície', texto: 'UI, style guide e protótipo' },
+        ]}
+      />
+
+      <figure class="cronograma">
+        <figcaption class="visualmente-oculto">Cronograma de 8 semanas: UX design nas semanas 1 a 6, UI design nas semanas 6 a 8.</figcaption>
+        <div class="cronograma-grade">
+          <p class="cronograma-fase rotulo" style="grid-column: 1 / 9; grid-row: 1">UX design</p>
+          <p class="cronograma-fase rotulo" style="grid-column: 23 / 33; grid-row: 1">UI design</p>
+          {cronograma.map((etapa, i) => (
+            <p
+              class:list={['cronograma-barra', { 'cronograma-barra-ui': etapa.ui }]}
+              style={`grid-column: ${etapa.inicio} / ${etapa.fim}; grid-row: ${i + 2}`}
+            >{etapa.nome}</p>
+          ))}
+          {Array.from({ length: 8 }, (_, i) => (
+            <p class="cronograma-semana" style={`grid-column: ${i * 4 + 1} / span 4; grid-row: ${cronograma.length + 2}`}>Sem {i + 1}</p>
+          ))}
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= DESK RESEARCH ================= -->
+  <section class="case-secao" aria-labelledby="titulo-desk">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-desk">Desk research</h2>
+      <p class="case-intro">Três fontes para entender o problema antes de ir a campo.</p>
+
+      <ul class="grade-3">
+        <li class="fonte">
+          <h3 class="rotulo">TechTudo</h3>
+          <p>Segurança (queda, coração) e autonomia motivam a compra; tela pequena e comandos difíceis afastam.</p>
+        </li>
+        <li class="fonte">
+          <h3 class="rotulo">PubMed Central</h3>
+          <p>Saúde é a principal motivação. Textos pequenos, menus, gestos e notificações confundem.</p>
+        </li>
+        <li class="fonte">
+          <h3 class="rotulo">Android Authority</h3>
+          <p>Telas retangulares oferecem mais área útil, o que virou decisão técnica do projeto.</p>
+        </li>
+      </ul>
+
+      <div class="grade-3 csd">
+        {csd.map((coluna) => (
+          <div class={coluna.classe}>
+            <h3 class="rotulo csd-titulo">{coluna.titulo}</h3>
+            <ul class="csd-lista">
+              {coluna.itens.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <p class="case-nota">A coluna de dúvidas da matriz CSD definiu o que precisávamos perguntar em campo.</p>
+    </div>
+  </section>
+
+  <!-- ================= ENTREVISTAS E PERSONA ================= -->
+  <section class="case-secao secao-superficie" aria-labelledby="titulo-entrevistas">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-entrevistas">Entrevistas e persona</h2>
+      <p class="case-intro">Partimos de uma proto-persona (Maria das Graças) para recrutar. Fizemos 5 entrevistas semiestruturadas, com 21 perguntas em três blocos: obstáculos, prioridade de recursos e interesse em inovação.</p>
+
+      <h3 class="rotulo texto-secundario">O que ouvimos</h3>
+      <ul class="citacoes">
+        {citacoes.map((citacao) => (
+          <li>
+            <figure class="citacao">
+              <span class="feedback-aspas" aria-hidden="true">“</span>
+              <blockquote>{citacao.texto}</blockquote>
+              <figcaption>{citacao.autor.toUpperCase()}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+
+      <div class="persona">
+        <div class="persona-proto">
+          <p class="rotulo">Proto-persona · hipótese</p>
+          <h3 class="persona-nome">Maria das Graças, 65</h3>
+          <p>Alegre, moderna, ativa e aposentada. Ganhou um smartwatch dos filhos e só usa as funções básicas.</p>
+          <p class="persona-uso">Usada para recrutar os 5 entrevistados.</p>
+        </div>
+
+        <span class="persona-seta" aria-hidden="true">→</span>
+
+        <div class="persona-final">
+          <!-- IMAGEM: foto ilustrativa da persona, ex.: <img src={url('img/persona.jpg')} alt=""> -->
+          <div class="imagem persona-foto">FOTO persona</div>
+          <div>
+            <p class="rotulo">Persona final</p>
+            <h3 class="persona-nome">Maria das Graças · 65 · Fortaleza</h3>
+            <p class="persona-frase">“Gosto de ser independente”</p>
+            <p>Mora sozinha, família presente. Tem familiaridade com tecnologia, mas acha a interface pequena e confusa, e mantém os contatos de emergência sempre à vista.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="achado">
+        <p class="rotulo">Principal achado</p>
+        <p class="achado-texto">Ela não tem medo da tecnologia. Tem medo de uma tecnologia que a faça se sentir <span class="destaque-serif">incapaz.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DO PROBLEMA AO FOCO ================= -->
+  <section class="case-secao" aria-labelledby="titulo-foco">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-foco">Do problema ao foco</h2>
+      <p class="case-intro">Dores e necessidades viraram requisitos de usuário e funcionais. A priorização por impacto e esforço apontou o foco: funções de emergência fáceis de encontrar e de acionar.</p>
+
+      <ul class="requisitos">
+        {requisitos.map((req) => (
+          <li class:list={['requisito', { 'requisito-foco': req.foco }]}>
+            <p class="requisito-caixa"><span class="rotulo">Requisito do usuário</span><strong>O usuário precisa</strong> {req.usuario}</p>
+            <span class="requisito-seta" aria-hidden="true">→</span>
+            <p class="requisito-caixa"><span class="rotulo">Requisito funcional</span><strong>O sistema deve</strong> {req.funcional}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= FLUXO ================= -->
+  <section class="case-secao secao-superficie" aria-labelledby="titulo-fluxo">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-fluxo">Fluxo da tarefa principal</h2>
+      <p class="case-intro">Dois gatilhos levam à mesma chamada: o botão SOS na tela principal ou o comando de voz. Os rabiscoframes, feitos à mão no caderno, acompanham cada etapa numerada.</p>
+    </div>
+    <div class="fluxograma">
+      <img
+        src={url('img/smartwatch-fluxo.svg')}
+        width="1394"
+        height="540"
+        loading="lazy"
+        alt="Fluxograma de emergência. Do início, se o gatilho não for por voz: ver a tela principal, acionar o botão de SOS, ver as opções de emergência e ligar para 190, para o contato de emergência ou para o SAMU, chegando à tela de chamada. Se for por voz: capturar o áudio, a pessoa fala a opção, o comando é processado e, se o SOS for reconhecido, a chamada é executada; se não, pergunta se quer tentar novamente. Na tela de chamada, se o contato não atender, liga de novo; se atender, pode ver um mapa com o endereço e informar a localização. O fluxo termina com a mensagem: seu alerta foi recebido, aguarde."
+      >
+    </div>
+  </section>
+
+  <!-- ================= SOLUÇÃO ================= -->
+  <section class="case-secao" aria-labelledby="titulo-solucao">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-solucao">Solução</h2>
+
+      <ul class="telas">
+        {telas.map((tela) => (
+          <li class="tela">
+            <div class="placeholder">Arraste: {tela.arquivo}</div>
+            <div>
+              <h3 class="rotulo">{tela.titulo}</h3>
+              <p>{tela.texto}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div class="style-guide">
+        <div class="style-guide-card">
+          <h3 class="rotulo">Cores do produto</h3>
+          <ul class="cores">
+            {cores.map((cor) => (
+              <li>
+                <div class="cor-amostra" style={`--amostra: var(${cor.variavel})`}></div>
+                <p class="cor-hex">{cor.hex}</p>
+                <p class="cor-nome">{cor.nome}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="style-guide-card">
+          <h3 class="rotulo">Tipografia · SF Pro</h3>
+          <dl class="tipos">
+            {tipos.map((tipo) => (
+              <div>
+                <dt>{tipo.nome}</dt>
+                <dd>{tipo.valor}</dd>
+              </div>
+            ))}
+          </dl>
+          <p class="tipos-nota">Escolhida pela legibilidade em telas pequenas.</p>
+        </div>
+      </div>
+
+      <!-- LINK: troque pelo endereço do protótipo no Figma -->
+      <Botao href="https://www.figma.com/proto/seu-prototipo" externo>Abrir protótipo navegável ↗</Botao>
+    </div>
+  </section>
+
+  <!-- ================= O QUE APRENDI ================= -->
+  <section class="case-secao secao-superficie" aria-labelledby="titulo-aprendi">
+    <div class="container">
+      <h2 class="case-rotulo" id="titulo-aprendi">O que aprendi</h2>
+      <ul class="case-lista">
+        <li>[Djara: 1 aprendizado sobre pesquisa com pessoas idosas]</li>
+        <li>[Djara: 1 aprendizado sobre atuar como PO e UX ao mesmo tempo]</li>
+      </ul>
+      <p class="case-creditos">Squad Tatsumari: Ellen Medeiros, Johon Gomes, Letícia de Araújo, Milena Agostinho, Patrick Silva, Silas Rufino e Djara Galvão. [confirmar nomes]</p>
+    </div>
+  </section>
+
+  <ProximoCase href="cases/plataforma-dados/" titulo="Plataforma de dados socioambientais" />
+
+</BaseLayout>

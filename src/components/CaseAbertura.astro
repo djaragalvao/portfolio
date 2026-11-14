@@ -1,0 +1,30 @@
+---
+import Chips from './Chips.astro';
+
+// Abertura do case: texto à esquerda, capa (slot) à direita
+interface Props {
+  eyebrow: string;
+  titulo: string;
+  lead: string;
+  tags: string[];
+}
+
+const { eyebrow, titulo, lead, tags } = Astro.props;
+---
+
+<section class="case-abertura" aria-labelledby="titulo-case">
+  <div class="container">
+    <div class="case-abertura-grade">
+      <div>
+        <p class="case-eyebrow">{eyebrow}</p>
+        <h1 class="case-titulo" id="titulo-case">{titulo}</h1>
+        <p class="case-lead">{lead}</p>
+        <Chips itens={tags} />
+      </div>
+      <div class="imagem case-capa">
+        <slot />
+      </div>
+    </div>
+    <slot name="depois" />
+  </div>
+</section>

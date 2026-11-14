@@ -1,0 +1,33 @@
+---
+// Card de recomendação: citação em destaque, texto de apoio e autor.
+interface Props {
+  destaque: string;
+  texto?: string;
+  nota?: string;           /* linha fora da citação, ex.: "Feedback recebido no LinkedIn" */
+  nome: string;
+  cargo: string;
+  relacao: string;
+  iniciais: string;
+  linkedin: string;
+}
+
+const { destaque, texto, nota, nome, cargo, relacao, iniciais, linkedin } = Astro.props;
+---
+
+<figure class="feedback">
+  <span class="feedback-aspas" aria-hidden="true">“</span>
+  <blockquote class="feedback-citacao">
+    <p class="feedback-destaque">{destaque}</p>
+    {texto && <p class="feedback-texto">{texto}</p>}
+  </blockquote>
+  {nota && <p class="feedback-nota">{nota}</p>}
+  <figcaption class="feedback-autor">
+    <span class="feedback-avatar" aria-hidden="true">{iniciais}</span>
+    <span class="feedback-dados">
+      <span class="feedback-nome">{nome}</span>
+      <span class="feedback-cargo">{cargo}</span>
+      <span class="feedback-relacao">{relacao}</span>
+    </span>
+    <a class="feedback-linkedin" href={linkedin} target="_blank" rel="noopener" aria-label={`Perfil de ${nome} no LinkedIn (abre em nova aba)`}>in</a>
+  </figcaption>
+</figure>

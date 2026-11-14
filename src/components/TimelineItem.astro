@@ -1,0 +1,22 @@
+---
+// Um item da linha do tempo de experiência (use dentro de <ol>)
+interface Props {
+  periodo: string;
+  empresa: string;
+  cargo: string;
+  descricao: string;
+  atual?: boolean;
+}
+
+const { periodo, empresa, cargo, descricao, atual = false } = Astro.props;
+---
+
+<li class:list={['timeline-item', { 'timeline-item-atual': atual }]}>
+  <p class="timeline-periodo">{periodo}</p>
+  <span class="timeline-marcador" aria-hidden="true"></span>
+  <div class="timeline-conteudo">
+    <h3 class="timeline-empresa">{empresa}</h3>
+    <p class="timeline-cargo">{cargo}</p>
+    <p class="timeline-descricao">{descricao}</p>
+  </div>
+</li>

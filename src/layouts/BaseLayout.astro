@@ -1,15 +1,17 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
+import CaseTopo from '../components/CaseTopo.astro';
 import Contato from '../components/Contato.astro';
 import Footer from '../components/Footer.astro';
 
 interface Props {
   title: string;
   description: string;
+  variante?: 'home' | 'case';
 }
 
-const { title, description } = Astro.props;
+const { title, description, variante = 'home' } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -19,19 +21,33 @@ const { title, description } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{title}</title>
   <meta name="description" content={description}>
+
+  <!-- Aplica o tema salvo (ou o do sistema) antes de desenhar a página -->
+  <script is:inline>
+    (() => {
+      let tema = null;
+      try {
+        tema = localStorage.getItem('tema');
+      } catch {}
+      if (tema !== 'light' && tema !== 'dark') {
+        tema = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.dataset.theme = tema;
+    })();
+  </script>
 </head>
 <body>
 
   <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
 
-  <Header />
+  {variante === 'home' ? <Header /> : <CaseTopo />}
 
   <main id="conteudo">
     <slot />
-    <Contato />
+    {variante === 'home' && <Contato />}
   </main>
 
-  <Footer />
+  {variante === 'home' && <Footer />}
 
 </body>
 </html>

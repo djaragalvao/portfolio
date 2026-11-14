@@ -40,3 +40,6 @@ Temporary Items
 node_modules/
 dist/
 .astro/
+
+# Referências exportadas do Figma
+figma svg files/

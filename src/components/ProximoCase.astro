@@ -1,0 +1,17 @@
+---
+import { url } from '../lib/url';
+
+interface Props {
+  href: string;
+  titulo: string;
+}
+
+const { href, titulo } = Astro.props;
+---
+
+<nav class="proximo" aria-label="Próximo case">
+  <div class="container">
+    <p class="rotulo">Próximo case</p>
+    <a class="proximo-link" href={url(href)}>{titulo} →</a>
+  </div>
+</nav>

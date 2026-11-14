@@ -1,9 +1,19 @@
-<section class="contato" id="contato" aria-label="Contato">
+---
+import Botao from './Botao.astro';
+---
+
+<section class="contato" id="contato" aria-labelledby="titulo-contato">
   <div class="container">
-    <p class="contato-chamada"><span aria-hidden="true">👋</span> Fale comigo em</p>
-    <p><a class="contato-email" href="mailto:seu-email@exemplo.com">seu-email@exemplo.com</a></p>
-    <p class="contato-acoes">
-      <a class="botao" href="https://www.linkedin.com/in/seu-perfil" target="_blank" rel="noopener">LinkedIn<span class="visualmente-oculto"> (abre em nova aba)</span></a>
-    </p>
+    <p class="contato-eyebrow">06 — Contato</p>
+    <h2 class="contato-titulo" id="titulo-contato">Vamos <span class="destaque-serif">conversar?</span></h2>
+    <p class="contato-texto">Aberta a vagas de UX/UI Designer e Product Designer · remoto ou Fortaleza</p>
+
+    <!-- LINKS: troque os endereços de LinkedIn, Behance e WhatsApp -->
+    <div class="botoes">
+      <Botao href="mailto:djaragalvao@gmail.com">djaragalvao@gmail.com</Botao>
+      <Botao href="https://www.linkedin.com/in/seu-perfil" variante="secundario" externo>LinkedIn</Botao>
+      <Botao href="https://www.behance.net/seu-perfil" variante="secundario" externo>Behance</Botao>
+      <Botao href="https://wa.me/5585000000000" variante="secundario" externo>WhatsApp</Botao>
+    </div>
   </div>
 </section>

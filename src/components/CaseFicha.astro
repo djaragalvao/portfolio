@@ -1,0 +1,17 @@
+---
+// Ficha do case: um item por coluna (rótulo + valor)
+interface Props {
+  itens: { rotulo: string; valor: string }[];
+}
+
+const { itens } = Astro.props;
+---
+
+<dl class="ficha">
+  {itens.map((item) => (
+    <div>
+      <dt class="rotulo">{item.rotulo}</dt>
+      <dd>{item.valor}</dd>
+    </div>
+  ))}
+</dl>

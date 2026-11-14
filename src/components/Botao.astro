@@ -1,0 +1,17 @@
+---
+// Botão pílula. Use href já com url() para links internos.
+interface Props {
+  href: string;
+  variante?: 'primario' | 'secundario';
+  externo?: boolean;
+}
+
+const { href, variante = 'primario', externo = false } = Astro.props;
+---
+
+<a
+  class:list={['botao', `botao-${variante}`]}
+  href={href}
+  target={externo ? '_blank' : undefined}
+  rel={externo ? 'noopener' : undefined}
+><slot />{externo && <span class="visualmente-oculto"> (abre em nova aba)</span>}</a>

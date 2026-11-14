@@ -13,10 +13,10 @@ bun preview       # serve o build localmente
 
 ## Estrutura
 
-- `src/pages/` — uma página por arquivo (`index`, `sobre`, `case-1`)
-- `src/layouts/BaseLayout.astro` — `<head>`, cabeçalho, contato e rodapé
-- `src/components/` — partes reutilizáveis (`Header`, `Footer`, `Contato`, `CaseCard`)
-- `src/styles/global.css` — estilos do site
+- `src/pages/` — a home (`index`, uma página só com todas as seções) e os cases em `cases/`
+- `src/layouts/BaseLayout.astro` — `<head>`, tema claro/escuro, cabeçalho, contato e rodapé
+- `src/components/` — partes reutilizáveis (`Header`, `ProjetoCard`, `TimelineItem`, `FeedbackCard`, `Stepper`, `CaseAbertura`...)
+- `src/styles/global.css` — estilos e variáveis do design system (cores dos temas claro e escuro no topo)
 - `public/img/` — imagens (servidas como `img/...`)
 
 ## Publicação
