@@ -1,0 +1,20 @@
+---
+import { url, isCurrent } from '../lib/url';
+
+const { pathname } = Astro.url;
+---
+
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape-conteudo">
+      <nav aria-label="Menu do rodapé">
+        <ul class="menu-lista">
+          <li><a class="menu-link" href={url()} aria-current={isCurrent(pathname, '') ? 'page' : undefined}>Início</a></li>
+          <li><a class="menu-link" href={url('sobre/')} aria-current={isCurrent(pathname, 'sobre/') ? 'page' : undefined}>Sobre</a></li>
+          <li><a class="menu-link" href={url('curriculo.pdf')} target="_blank" rel="noopener">Currículo<span class="visualmente-oculto"> (abre em nova aba)</span></a></li>
+        </ul>
+      </nav>
+      <a class="menu-link" href="https://www.linkedin.com/in/seu-perfil" target="_blank" rel="noopener">LinkedIn<span class="visualmente-oculto"> (abre em nova aba)</span></a>
+    </div>
+  </div>
+</footer>
